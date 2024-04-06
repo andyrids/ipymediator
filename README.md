@@ -1,1 +1,1 @@
-# ipydialogwidgets
+# ipydialog
