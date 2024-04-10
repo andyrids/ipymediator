@@ -1,9 +1,9 @@
 from operator import itemgetter
 from typing import Optional, Union
 
-from custom_types import Options, Value
-from mediator import Mediator
-from metaclass import ABCTraits
+from enumerations import Options, Value
+from .mediator import Mediator
+from .metaclass import ABCTraits
 
 from ipywidgets import widgets
 

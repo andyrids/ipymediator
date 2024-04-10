@@ -2,7 +2,7 @@ from abc import abstractmethod
 from typing import Union
 
 from metaclass import ABCTraits
-from custom_types import Value, Options
+from enumerations import Value, Options
 
 from traitlets import HasTraits
 
