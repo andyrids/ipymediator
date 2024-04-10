@@ -2,7 +2,7 @@ import functools
 import pathlib
 from typing import Callable, Optional
 
-from enumerations import IconUnicode
+from enumerations.custom_enums import IconUnicode
 
 def iconify_str(icon: IconUnicode, path: pathlib.Path) -> str:
     """Return PosixPath prefixed with an Icon Enum value
