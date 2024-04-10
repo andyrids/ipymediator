@@ -16,9 +16,15 @@ Currently only the FileDialog dialog is being added. This dialog acts a local fi
 
 ### Screenshots
 
+No file selected:
+
 ![Screenshot 1](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Browse.png)
 
+File selected:
+
 ![Screenshot 2](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Selected.png)
+
+Selected and saved file, with dialog trait values:
 
 ![Screenshot 3](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Selected_Properties.png)
 
