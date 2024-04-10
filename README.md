@@ -1,4 +1,4 @@
-# ipydialog: Custom Dialogs Using ipywidgets HTML Widgets & ipyleaflet WidgetControl
+# ipydialog: Dialogs Using ipywidgets & ipyleaflet
 
 **NOTE**: This package is a WIP
 
