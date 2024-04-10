@@ -2,11 +2,9 @@
 
 **NOTE**: This package is a WIP
 
-**ipywidgets**, also known as jupyter-widgets or simply widgets, are
-[interactive HTML widgets](https://github.com/jupyter-widgets/ipywidgets/blob/main/docs/source/examples/Index.ipynb)
-for Jupyter notebooks and the IPython kernel.
+**ipywidgets** are [interactive HTML widgets](https://github.com/jupyter-widgets/ipywidgets/blob/main/docs/source/examples/Index.ipynb) for Jupyter notebooks and the IPython kernel.
 
-**ipyleaflet** is a Jupyter / Leaflet bridge enabling [interactive maps](https://github.com/jupyter-widgets/ipyleaflet/tree/master) in the Jupyter notebook.
+**ipyleaflet** is a Jupyter/Leaflet bridge enabling [interactive maps](https://github.com/jupyter-widgets/ipyleaflet/tree/master) in the Jupyter notebook.
 
 This package contains a python implimentation of dialog mediator classes. These mediator objects facilitate communication between component objects, which utilise ipywidget core interactive widgets. The package was inspired by [ipyfilechooser](https://github.com/crahan/ipyfilechooser/tree/master) and [leafmap](https://github.com/opengeos/leafmap) and was designed as a solution to a specific project involving a custom ipleaflet WidgetControl implimentation for geospatial data.
 
@@ -18,12 +16,11 @@ Currently only the FileDialog dialog is being added. This dialog acts a local fi
 
 ### Screenshots
 
+![Screenshot 1](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Browse.png)
 
-![Screenshot 1](https://github.com/AndyRids/ipydialog/examples/images/FileDialog_Browse.png)
+![Screenshot 2](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Selected.png)
 
-![Screenshot 2](https://github.com/AndyRids/ipydialog/examples/images/FileDialog_Selected.png)
-
-![Screenshot 3](https://github.com/AndyRids/ipydialog/examples/images/FileDialog_Selected_Properties.png)
+![Screenshot 3](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Selected_Properties.png)
 
 - WidgetControlDialog [TBC]
 
