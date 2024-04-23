@@ -4,16 +4,16 @@ from typing import Optional, Union
 from ipydialogs.enumerations import ButtonColour, Options, Value
 from ipydialogs.interface import Component, DialogMediator
 from ipydialogs.utils.common_functions import (
-    deiconify_str, 
-    directory_contents, 
-    directory_paths, 
+    deiconify_str,
+    directory_contents,
+    directory_paths,
     singlenotifydispatch
 )
-from ipywidgets import widgets
+from ipywidgets import widgets as w
 
 
 class FileDialog(DialogMediator):
-    """A DialogMediator, which facilitates communication between the DOMWidgets
+    """A DialogMediator, which facilitates communication between the DOMw
     responsible for geospatial file selection and import.
 
     Traits:
@@ -42,33 +42,33 @@ class FileDialog(DialogMediator):
         self.dialog_name = dialog_name or f"{type(self).__name__}"
 
         self.button_min = Component(
-            mediator=self, widget=widgets.Button(), widget_name="ButtonMin")
+            mediator=self, widget=w.Button(), widget_name="ButtonMin")
 
         self.button_close = Component(
-            mediator=self, widget=widgets.Button(), widget_name="ButtonClose")
+            mediator=self, widget=w.Button(), widget_name="ButtonClose")
 
         self.button_save = Component(
-            mediator=self, widget=widgets.Button(), widget_name="ButtonSave")
+            mediator=self, widget=w.Button(), widget_name="ButtonSave")
 
         self.button_select = Component(
-            mediator=self, widget=widgets.ToggleButton(), widget_name="ButtonSelect")
+            mediator=self, widget=w.ToggleButton(), widget_name="ButtonSelect")
 
-        self.label_selected = Component(mediator=self, widget=widgets.Label())
+        self.label_selected = Component(mediator=self, widget=w.Label())
 
         self.file_option = Component(
-            mediator=self, widget=widgets.ToggleButtons(), widget_name="FileOptions")
+            mediator=self, widget=w.ToggleButtons(), widget_name="FileOptions")
 
         self.file_output = Component(
-            mediator=self, widget=widgets.Text(), widget_name="FileOutput")
+            mediator=self, widget=w.Text(), widget_name="FileOutput")
 
         self.file_selected = Component(
-            mediator=self, widget=widgets.Text(), widget_name="FileSelected")
+            mediator=self, widget=w.Text(), widget_name="FileSelected")
 
         self.directory = Component(
-            mediator=self, widget=widgets.Dropdown(), widget_name="Directory")
+            mediator=self, widget=w.Dropdown(), widget_name="Directory")
 
         self.directory_files = Component(
-            mediator=self, widget=widgets.Select(), widget_name="DirectoryFiles")
+            mediator=self, widget=w.Select(), widget_name="DirectoryFiles")
 
         self.button_close["description"] = "X"
         self.button_close["style"].font_weight = "bold"
@@ -102,11 +102,11 @@ class FileDialog(DialogMediator):
         self.directory_files["layout"].width = "auto"
         self.directory_files["layout"].height = "92px"
 
-        self.container_upper = widgets.HBox()
+        self.container_upper = w.HBox()
         self.container_upper.children = (
             self.file_option.widget, self.button_close.widget)
 
-        self.container_upper.layout = widgets.Layout(
+        self.container_upper.layout = w.Layout(
             display="grid",
             margin="2px 0px",
             grid_gap="0px 0px",
@@ -116,14 +116,14 @@ class FileDialog(DialogMediator):
             "FileOption ButtonClose"
             """)
 
-        self.container_middle = widgets.GridBox()
+        self.container_middle = w.GridBox()
         self.container_middle.children = (
             self.directory.widget,
             self.file_output.widget,
             self.button_save.widget,
             self.directory_files.widget)
 
-        self.container_middle.layout = widgets.Layout(
+        self.container_middle.layout = w.Layout(
             width="auto",
             height="auto",
             grid_gap="0px 0px",
@@ -134,16 +134,16 @@ class FileDialog(DialogMediator):
             "DirectoryContent DirectoryContent  DirectoryContent"
             """)
 
-        self.container_lower = widgets.HBox()
+        self.container_lower = w.HBox()
         self.container_lower.children = (
             self.button_select.widget,
-            widgets.HBox(
+            w.HBox(
                 (self.label_selected.widget, self.file_selected.widget))
         )
 
-        self.container = widgets.VBox(children=(
+        self.container = w.VBox(children=(
             self.container_upper, self.container_middle, self.container_lower))
-        self.container.layout = widgets.Layout(max_width="430px")
+        self.container.layout = w.Layout(max_width="430px")
 
         if filter_pattern is not None:
             self.file_option["options"] = filter_pattern
@@ -156,12 +156,10 @@ class FileDialog(DialogMediator):
             self.file_option["disabled"] = True
             self.file_option["options"] = (("", "*"),)
 
-
     @singlenotifydispatch
     def notify(self, reference: str, change: Union[Value, Options]) -> None:
         """Method for notifying a mediator class of a widget event"""
         pass
-
 
     @notify.register("FileOptions")
     def _(self, reference: str, change: Value) -> None:
@@ -176,7 +174,6 @@ class FileDialog(DialogMediator):
         else:
             self.directory["options"] = options
 
-
     @notify.register("Directory")
     def _(self, reference: str, change: Value) -> None:
         # directory -> FileDialog -> directory_files
@@ -184,7 +181,6 @@ class FileDialog(DialogMediator):
             self.patlib_path(str(change["new"])),
             self.file_option["value"],
             rglob=False)
-
 
     @notify.register("DirectoryFiles")
     def _(self, reference: str, change: Options) -> None:
@@ -197,7 +193,6 @@ class FileDialog(DialogMediator):
             self.button_select["disabled"] = True
             self.button_select["value"] = False
 
-
     @notify.register("ButtonSelect")
     def _(self, reference: str, change: Value) -> None:
         value_idx = int(change["new"])
@@ -208,7 +203,6 @@ class FileDialog(DialogMediator):
         file_selected = self.directory_files["value"]
         self.file_selected["value"] = ("...", file_selected)[value_idx]
 
-
     @notify.register("ButtonSave")
     def _(self, reference: str, change: Value) -> None:
         # button_save -> FileDialog -> Map
@@ -217,12 +211,10 @@ class FileDialog(DialogMediator):
         self.dialog_selection = pathlib.Path(f"{directory}/{filename}")
         self.button_select["value"] = False
 
-
     @notify.register("ButtonClose")
     def _(self, reference: str, change: Value) -> None:
         """"""
         self.dialog_open = False
-
 
     @notify.register("FileSelected")
     def _(self, reference: str, change: Value) -> None:
@@ -234,7 +226,6 @@ class FileDialog(DialogMediator):
 
         self.file_output["value"] = file_selected
         self.button_save["disabled"] = False
-
 
     def patlib_path(self, path_str: str) -> pathlib.Path:
         return pathlib.Path(deiconify_str(path_str))
