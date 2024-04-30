@@ -1,9 +1,9 @@
 from operator import itemgetter
 from typing import Optional, Union
 
-from ipydialogs.enumerations import Options, Value
-from ipydialogs.interface import Mediator
-from ipydialogs.interface.metaclass import ABCTraits
+from ipymediator.enumerations import Options, Value
+from ipymediator.interface import Mediator
+from ipymediator.interface.metaclass import ABCTraits
 
 from ipywidgets import widgets
 from traitlets import Bool

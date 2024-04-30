@@ -1,3 +1,3 @@
-from ipydialogs.dialogs import FileDialog
+from ipymediator.dialogs import FileDialog
 
 __all__ = ("FileDialog",)

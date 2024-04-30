@@ -1,9 +1,9 @@
 import pathlib
 from typing import Optional, Union
 
-from ipydialogs.enumerations import ButtonColour, Options, Value
-from ipydialogs.interface import Component, DialogMediator
-from ipydialogs.utils.common_functions import (
+from ipymediator.enumerations import ButtonColour, Options, Value
+from ipymediator.interface import Component, DialogMediator
+from ipymediator.utils.common_functions import (
     deiconify_str,
     directory_contents,
     directory_paths,
