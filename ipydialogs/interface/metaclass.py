@@ -1,8 +1,8 @@
-
 import inspect
 from abc import ABCMeta
 
 from traitlets import MetaHasTraits
+
 
 class ABCTraitsMeta(ABCMeta, MetaHasTraits):
     """A Metaclass combining the Abstract Base Class (ABC) Metaclass ABCMeta
@@ -14,7 +14,7 @@ class ABCTraitsMeta(ABCMeta, MetaHasTraits):
     methods (ABCMeta), whilst allowing child classes to also have traits
     (MetaHasTraits) or inherit directly from DOMWidget classes."""
 
-    def __new__(cls, *args, **kwargs) :
+    def __new__(cls, *args, **kwargs):
         return super(ABCTraitsMeta, cls).__new__(cls, *args, **kwargs)
 
     # def __call__(cls, *args, **kwargs):
@@ -27,6 +27,8 @@ class ABCTraitsMeta(ABCMeta, MetaHasTraits):
     #             cls_.__init__(instance, **kw)
     #     return instance
 
+
 class ABCTraits(metaclass=ABCTraitsMeta):
     """Used to set ABCTraitsMeta metaclass through inheritence like abc.ABC"""
+
     __slots__ = ()

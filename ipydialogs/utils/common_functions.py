@@ -18,9 +18,10 @@ def iconify_str(icon: IconUnicode, path: pathlib.Path) -> str:
     if (path_parent := path.parent).match("/"):
         path_parent = path
 
-    icon_map = { # for DIR, we strip the "/" prefix
+    icon_map = {  # for DIR, we strip the "/" prefix
         IconUnicode.DIR: f"{icon}{str(path_parent)[1:]}",
-        IconUnicode.FILE: f"{icon}{path.name}"}
+        IconUnicode.FILE: f"{icon}{path.name}",
+    }
 
     return icon_map[icon]
 
@@ -42,8 +43,11 @@ def deiconify_str(iconified_path: str) -> str:
     return iconified_path.replace(icon, "")
 
 
-def directory_paths(root_path: pathlib.Path, pattern: str, rglob: bool = True) -> tuple[str, ...]:
+def directory_paths(
+    root_path: pathlib.Path, pattern: str, rglob: bool = True
+) -> tuple[str, ...]:
     """"""
+
     def reduce_fn(acc: list[str], path: pathlib.Path) -> list[str]:
         # e.g. '📁 content'
         iconified_directory = iconify_str(IconUnicode.DIR, path)
@@ -58,14 +62,19 @@ def directory_paths(root_path: pathlib.Path, pattern: str, rglob: bool = True) -
 
     if rglob:
         return tuple(
-            functools.reduce(reduce_fn, root_path.rglob(pattern), initialiser))
+            functools.reduce(reduce_fn, root_path.rglob(pattern), initialiser)
+        )
 
     return tuple(
-            functools.reduce(reduce_fn, root_path.glob(pattern), initialiser))
+        functools.reduce(reduce_fn, root_path.glob(pattern), initialiser)
+    )
 
 
-def directory_contents(root_path: pathlib.Path, pattern: str, rglob: bool = True) -> tuple[str, ...]:
+def directory_contents(
+    root_path: pathlib.Path, pattern: str, rglob: bool = True
+) -> tuple[str, ...]:
     """"""
+
     def reduce_fn(acc: list[str], path: pathlib.Path) -> list[str]:
         if path.is_dir():
             return acc
@@ -81,9 +90,11 @@ def directory_contents(root_path: pathlib.Path, pattern: str, rglob: bool = True
     initialiser = list()
     if rglob:
         return tuple(
-            functools.reduce(reduce_fn, root_path.rglob(pattern), initialiser))
+            functools.reduce(reduce_fn, root_path.rglob(pattern), initialiser)
+        )
     return tuple(
-            functools.reduce(reduce_fn, root_path.glob(pattern), initialiser))
+        functools.reduce(reduce_fn, root_path.glob(pattern), initialiser)
+    )
 
 
 def singlenotifydispatch(func):
@@ -93,6 +104,7 @@ def singlenotifydispatch(func):
 
     # value -> function map
     registry = dict()
+
     def dispatch(value: str) -> Callable:
         """Returns a function based on registry key (value)"""
         try:

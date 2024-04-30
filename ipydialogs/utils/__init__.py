@@ -3,5 +3,5 @@ from .common_functions import (
     directory_contents,
     directory_paths,
     iconify_str,
-    singlenotifydispatch
+    singlenotifydispatch,
 )

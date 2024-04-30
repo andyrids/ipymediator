@@ -38,5 +38,6 @@ class DialogMediator(Mediator, HasTraits):
 
         _control: Holds a reference to a DialogMediator control Mediator
     """
-    dialog_open = Bool(default_value=True).tag(sync=True) # type: ignore
-    dialog_selection = Instance(pathlib.Path, allow_none=True, default_value=None).tag(sync=True) # type: ignore
+
+    dialog_open = Bool(default_value=True).tag(sync=True)  # type: ignore
+    dialog_selection = Instance(pathlib.Path, allow_none=True, default_value=None).tag(sync=True)  # type: ignore
