@@ -1,3 +1,3 @@
-from ipymediator.dialogs import FileDialog
+from ipymediator.interface import ABCTraits, ABCTraitsMeta, Component, Mediator
 
-__all__ = ("FileDialog",)
+__all__ = ("ABCTraits", "ABCTraitsMeta", "Component", "Mediator")

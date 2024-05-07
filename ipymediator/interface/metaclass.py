@@ -1,4 +1,4 @@
-import inspect
+# import inspect
 from abc import ABCMeta
 
 from traitlets import MetaHasTraits
@@ -18,7 +18,8 @@ class ABCTraitsMeta(ABCMeta, MetaHasTraits):
         return super(ABCTraitsMeta, cls).__new__(cls, *args, **kwargs)
 
     # def __call__(cls, *args, **kwargs):
-    #     """Calls super().__init__(*args, **kwargs) for all ABCTraitsMeta users"""
+    #     """Calls super().__init__(*args, **kwargs) for all ABCTraitsMeta
+    #     users"""
     #     instance = cls.__new__(cls, *args, **kwargs)
     #     for cls_ in cls.__mro__:
     #         if isinstance(cls_, (ABCTraitsMeta)):

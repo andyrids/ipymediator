@@ -2,8 +2,9 @@ import pathlib
 from abc import abstractmethod
 from typing import Union
 
-from ipydialogs.interface.metaclass import ABCTraits
-from ipydialogs.enumerations import Value, Options
+from ipymediator.interface.component import Component
+from ipymediator.interface.metaclass import ABCTraits
+from ipymediator.enumerations import Value, Options
 
 from traitlets import Bool, HasTraits, Instance
 
@@ -12,7 +13,10 @@ class Mediator(ABCTraits):
     """Abstract Mediator class for Mediator interface implimentation"""
 
     @abstractmethod
-    def notify(self, reference: str, change: Union[Value, Options]) -> None:
+    def notify(
+            self,
+            reference: Union[str, Component],
+            change: Union[Value, Options]) -> None:
         """Method for notifying a mediator class of DOMWidget trait changes
 
         Parameters:
@@ -40,4 +44,7 @@ class DialogMediator(Mediator, HasTraits):
     """
 
     dialog_open = Bool(default_value=True).tag(sync=True)  # type: ignore
-    dialog_selection = Instance(pathlib.Path, allow_none=True, default_value=None).tag(sync=True)  # type: ignore
+    dialog_selection = Instance(
+        pathlib.Path,
+        allow_none=True,
+        default_value=None).tag(sync=True)  # type: ignore

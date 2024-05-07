@@ -2,7 +2,7 @@ import functools
 import pathlib
 from typing import Callable, Optional
 
-from ipydialogs.enumerations import IconUnicode
+from ipymediator.enumerations import IconUnicode
 
 
 def iconify_str(icon: IconUnicode, path: pathlib.Path) -> str:
@@ -109,7 +109,7 @@ def singlenotifydispatch(func):
         """Returns a function based on registry key (value)"""
         try:
             return registry[value]
-        except:
+        except Exception:
             return func
 
     def register(value: str, func: Optional[Callable] = None) -> Callable:
