@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "ipydialogs"
+name = "ipymediator"
 version = "0.1.10a1"
 description = "Dialogs Using ipywidgets & ipyleaflet"
 authors = ["Andrew Ridyard <ridyard12@gmail.com>"]
