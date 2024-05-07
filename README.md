@@ -16,7 +16,7 @@ The package was inspired by [ipyfilechooser](https://github.com/crahan/ipyfilech
 [**traitlets**](https://traitlets.readthedocs.io/en/stable/using_traitlets.html) allows the user to define classes that have attributes (traits) with type checking and dynamically computed default values. Traitlets also implements the observer pattern and is used by ipywidgets extensively.
 
 > [!TIP]
-> Mediator dialogs built using this interface will be added to the dialog module.
+> Mediator dialogs built using this interface will be added to the dialogs module.
 
 ## Interface
 
