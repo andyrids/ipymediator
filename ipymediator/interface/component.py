@@ -51,13 +51,16 @@ class Component(ABCTraits):
                 Mediator's notify function - self (True) or widget_name (False)
 
         Raises:
-            ValueError: If names param contains trait names not held by widget
+            ValueError: Names param contains trait names not held by widget
+
+            AttributeError: Access trait name not held by widget property
         """
         self.__mediator = mediator
         self.widget = widget
-        if not all(self(*names)):
-            raise ValueError(
-                f"traits {names} not in widget ({type(widget).__name__})")
+        try:
+            self(*names)
+        except AttributeError as e:
+            raise ValueError(f"check 'names' parameter: {names}") from e
         self.widget.observe(self.observe_handler, names=names)  # type: ignore
         self.widget_name = widget_name or f"{type(widget).__name__}Component"
         self.__reference = self if notify_self else self.widget_name
