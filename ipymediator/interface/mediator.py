@@ -2,7 +2,6 @@ import pathlib
 from abc import abstractmethod
 from typing import Union
 
-from ipymediator.interface.component import Component
 from ipymediator.interface.metaclass import ABCTraits
 from ipymediator.enumerations import Value, Options
 
@@ -15,7 +14,7 @@ class Mediator(ABCTraits):
     @abstractmethod
     def notify(
             self,
-            reference: Union[str, Component],
+            reference: Union[str, ABCTraits],
             change: Union[Value, Options]) -> None:
         """Method for notifying a mediator class of DOMWidget trait changes
 
