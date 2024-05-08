@@ -190,7 +190,6 @@ def observe_handler(change: Union[Value, Options]) -> None
 ```
 Used as the widgets `observe` method callback function to pass a observed trait(s) change `dict` to a Mediator through its `notify` method.
 
-
 #### Overriden Dunder Methods
 
 ```python
@@ -228,23 +227,3 @@ Overriden to enable setting of widget trait values through bracket notation.
 def __str__(self) -> str
 ```
 Returns the value of the `widget_name` property.
-
-
-### Screenshots
-
-No file selected:
-
-![Screenshot 1](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Browse.png)
-
-File selected:
-
-![Screenshot 2](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Selected.png)
-
-Selected and saved file, with dialog trait values:
-
-![Screenshot 3](https://raw.githubusercontent.com/AndyRids/ipydialog/main/examples/images/FileDialog_Selected_Properties.png)
-
-- WidgetControlDialog [TBC]
-
-The WidgetControlDialog provides a custom toolbar dialog for an ipyleaflet Map. The toolbar uses the FileDialog to add geospatial data from local files to a Map.
-
