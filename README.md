@@ -18,6 +18,21 @@ The package was inspired by [ipyfilechooser](https://github.com/crahan/ipyfilech
 > [!TIP]
 > Mediator dialogs built using this interface will be added to the dialogs module.
 
+## Install
+
+Currently this package can be installed with the following command:
+
+`pip install git+https://github.com/AndyRids/ipymediator.git@main`
+
+This package was built using [**Poetry**](https://python-poetry.org/docs/), which is a tool for dependency management and packaging in Python. The reposititory can be cloned and have the necessary dependancies installed using the following commands:
+
+```bash
+git clone https://github.com/AndyRids/ipymediator.git
+cd ipymediator
+poetry install
+```
+
+
 ## Interface
 
 |#| Class         | Information                                                               |
@@ -118,7 +133,7 @@ class Dialog(Mediator, HasTraits):
             mediator=self, widget=w.Text(), widget_name="message_clicks")
         
         self.message_value = Component(
-            mediator=self, widget=w.Text(), widget_name="message_value")
+            mediator=self, widget=w.Text(), widget_name="message_value", names=("disabled",))
 
         # Component allows changes to widget property traits through 
         # bracket notation (see Component info for details)
@@ -138,8 +153,11 @@ class Dialog(Mediator, HasTraits):
             )
         )
 
+    @singlenotifydispatch
     def notify(self, reference: str, change: Value) -> None:
-        """Receives nessages from concrete Components
+        """Receives messages from concrete Components.
+        singlenotifydispatch wrapper allows overloading of notify
+        based on reference string value.
         
         Params:
             reference (str): Reference value passed by Component. Can be used to 
@@ -147,13 +165,23 @@ class Dialog(Mediator, HasTraits):
             
             change (Value): trait value change dict passed by traitlets observe function.
         """
+        pass
+           
+    @notify.register("button_submit")
+    def _(self, reference: str, change: Value) -> None:
+        """If reference == button_submit"""
+        # button_submit.widget was clicked
+        self.button_counter += 1
+        self.message_clicks["value"] = f"Button clicks: {self.button_counter}"
+        self.message_value["value"] = f"Button value is {self.button_submit['value']}"
+        self.message_value["disabled"] = self.button_submit["value"]
 
-        if reference == "button_submit":
-            # button_submit.widget was clicked
-            self.button_counter += 1
-            self.message_clicks["value"] = f"Button clicks: {self.button_counter}"
-            self.message_value["value"] = f"Button value is {self.button_submit['value']}"
-            self.message_value["disabled"] = self.button_submit["value"]
+    @notify.register("message_value")
+    def _(self, reference: str, change: Value) -> None:
+        """If reference == message_value"""
+        # message_value.widget disabled trait change
+        message = ("enabled", "disabled")[int(change["new"])]
+        print(f"message_value.widget was {message}")
 ```
 ![Mediator Example](https://raw.githubusercontent.com/AndyRids/ipymediator/main/examples/images/mediator_example.png)
 
@@ -162,7 +190,6 @@ class Dialog(Mediator, HasTraits):
 A concrete Component class, which communicates with a concrete Mediator implimentning the Mediator interface. Messages are passed to the Mediator by utilising a widget's observe method, which is set to use the Component's `observe_handler` method as a callback function. This callback is triggered on changes to specified widget trait(s).
 
 Component inherits `ipymediator.ABCTraits` and can therefore be extended to inherit from `traitlets.HasTraits` and be given traits of its own without metaclass conflicts.
-
 
 #### Methods:
 
@@ -227,3 +254,8 @@ Overriden to enable setting of widget trait values through bracket notation.
 def __str__(self) -> str
 ```
 Returns the value of the `widget_name` property.
+
+## Utility Functions
+
+### 1. *class* ipymediator.utils.singlenotifydispatch
+
