@@ -107,7 +107,7 @@ class Dialog(Mediator):
     button_counter = traitlets.Integer(0, help="button clicks").tag(config=True)
 
     def __init__(self):
-        super(Dialog, self).__init__():
+        super(Dialog, self).__init__()
 
         # Component adds Bool trait called value to all Button widgets by default,
         # which toggles True/False on each click (like ToggleButton widget)
