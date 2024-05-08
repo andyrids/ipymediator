@@ -99,12 +99,11 @@ from ipymediator.utils import singlenotifydispatch
 from ipywidgets import widgets as w
 from traitlets import HasTraits, traitlets
 
-class Dialog(Mediator):
+class Dialog(Mediator, HasTraits):
     """Receives messages from Button and Text widgets and passes an action
     to carry out, to the appropriate widget on message receipt"""
 
-    message_counter = traitlets.Integer(0, help="messages passed").tag(config=True)
-    button_counter = traitlets.Integer(0, help="button clicks").tag(config=True)
+    button_counter = traitlets.Integer(default_value=0, help="button clicks").tag(config=True)
 
     def __init__(self):
         super(Dialog, self).__init__()
@@ -112,27 +111,32 @@ class Dialog(Mediator):
         # Component adds Bool trait called value to all Button widgets by default,
         # which toggles True/False on each click (like ToggleButton widget)
         self.button_submit = Component(
-            mediator=self, widget=w.Button(), widget_name="button_submit")
+            mediator=self, widget=w.Button(), widget_name="button_submit", names=("value",))
 
         # Component __init__ sets "value" trait to be observed by default
-        self.text_message = Component(
-            mediator=self, widget=w.Text(), widget_name="text_message")
+        self.message_clicks = Component(
+            mediator=self, widget=w.Text(), widget_name="message_clicks")
+        
+        self.message_value = Component(
+            mediator=self, widget=w.Text(), widget_name="message_value")
 
         # Component allows changes to widget property traits through 
         # bracket notation (see Component info for details)
-        self.button_submit["description"] = "Clicks: 0"
+        self.button_submit["description"] = "Click Me"
+        self.button_submit["layout"].width = "300px"
         self.button_submit["style"].font_weight = "bold"
-        self.button_submit["style"].button_width = "88px"
+        self.button_submit["style"].button_color = "#f8edeb"
 
-        self.button_message["disabled"] = True
-        self.button_message["style"].width = "300px"
-        self.counter_message["disabled"] = True
-        self.counter_message["style"].width = "300px"
+        self.message_clicks["style"].width = "300px"
+        self.message_value["style"].width = "300px"
 
-    @traitlets.observe("button_counter")
-    def _counter_increased(self, change: dict) -> None:
-        """Changes button_submit description value on """
-        self.button_submit["description"] = f"Clicks: {change['new']}"
+        self.container = w.VBox(
+            children=(
+                self.button_submit.widget,
+                self.message_clicks.widget,
+                self.message_value.widget
+            )
+        )
 
     def notify(self, reference: str, change: Value) -> None:
         """Receives nessages from concrete Components
@@ -143,14 +147,15 @@ class Dialog(Mediator):
             
             change (Value): trait value change dict passed by traitlets observe function.
         """
-        self.message_counter += 1
-        self.counter_message["value"] = f"messages passed: {self.message_counter}"
 
         if reference == "button_submit":
             # button_submit.widget was clicked
             self.button_counter += 1
-            self.button_message["value"] = f"Button clicked: {self.button_counter}"
+            self.message_clicks["value"] = f"Button clicks: {self.button_counter}"
+            self.message_value["value"] = f"Button value is {self.button_submit['value']}"
+            self.message_value["disabled"] = self.button_submit["value"]
 ```
+![Mediator Example](https://raw.githubusercontent.com/AndyRids/ipymediator/main/examples/images/mediator_example.png)
 
 ### 3. *class* ipymediator.Component
 
