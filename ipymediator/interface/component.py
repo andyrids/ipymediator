@@ -2,7 +2,7 @@ from operator import itemgetter
 from typing import Optional, Union
 
 from ipymediator.enumerations import Options, Value
-from ipymediator.interface import Mediator
+from ipymediator.interface.mediator import Mediator
 from ipymediator.interface.metaclass import ABCTraits
 
 from ipywidgets import widgets
