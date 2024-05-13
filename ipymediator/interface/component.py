@@ -58,6 +58,7 @@ class Component(ABCTraits):
         self.__mediator = mediator
         self.widget = widget
         try:
+            # returns widget trait values referenced by names (__call__)
             self(*names)
         except AttributeError as e:
             raise ValueError(f"check 'names' parameter: {names}") from e
