@@ -198,7 +198,8 @@ def __init__(
     mediator: Mediator, 
     widget: DOMWidget, 
     widget_name: str = None, 
-    names: tuple[str, ...] = ("value",)) -> None
+    names: tuple[str, ...] = ("value",),
+    notify_self: bool = False) -> None
 ```
 *mediator* - Reference to a Concrete Mediator.
 
@@ -217,7 +218,7 @@ def observe_handler(change: Union[Value, Options]) -> None
 ```
 Used as the widgets `observe` method callback function to pass a observed trait(s) change `dict` to a Mediator through its `notify` method.
 
-#### Overriden Dunder Methods
+#### Overriden Dunder Methods:
 
 ```python
 def __new__(cls, **kwargs) -> Component
@@ -254,6 +255,60 @@ Overriden to enable setting of widget trait values through bracket notation.
 def __str__(self) -> str
 ```
 Returns the value of the `widget_name` property.
+
+### Example Concrete Component:
+
+```python
+from functools import singledispatchmethod
+from IPython.display import display
+from ipymediator.enumerations import Value
+from ipymediator.interface import Mediator, Component
+from ipywidgets import widgets as w
+
+class ConcreteMediator(Mediator):
+    @singledispatchmethod
+    def notify(self, reference: Union[str, Component], change: Value):
+        pass
+
+    @notify.register
+    def _(self, reference: str, change: Value):
+        print(f"""Message sent from: {reference}
+            {reference=}""", end="\n\n")
+
+    @notify.register
+    def _(self, reference: Component, change: Value):
+        print(f"""Message sent from: {reference.widget_name}
+            {reference=}""", end="\n\n")
+
+# concrete Mediator instance
+mediator = ConcreteMediator()
+
+# component_one passes widget_name as reference to Mediator
+component_one = Component(
+    mediator=mediator,
+    widget=w.Button(description="component_one"),
+    widget_name="component_one",
+    names=("value",),
+    notify_self=False)
+
+# change button_color of  ipywidgets Button to cyan
+component_one["style"].button_color = "cyan"
+
+# component_two passes self as reference to Mediator
+component_two = Component(
+    mediator=mediator,
+    widget=w.Button(description="component_two"),
+    widget_name="component_two",
+    names=("value",),
+    notify_self=True)
+
+# change button_color of  ipywidgets Button to lime
+component_two["style"].button_color = "lime"
+
+# display Component widgets (Button x 2) in a VBox
+display(w.VBox((component_one.widget, component_two.widget)))
+```
+![Mediator Example](https://raw.githubusercontent.com/AndyRids/ipymediator/main/examples/images/component_example.png)
 
 ## Utility Functions
 
