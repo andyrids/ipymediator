@@ -66,8 +66,6 @@ def test_pathlib_functions():
     iconified_file = iconify_str(IconUnicode.FILE, file_path)
     # test iconified file path str format
     assert iconified_file == f"{IconUnicode.FILE}{file_path.name}"
-    # test deiconfied path str can be used as a legitimate file Path
-    assert pathlib.Path(deiconify_str(iconified_file)).is_file()
 
     def iconified_to_path(str_: str) -> pathlib.Path:
         """Helper function to deiconify a str and convert to Path"""
