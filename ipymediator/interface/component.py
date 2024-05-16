@@ -6,7 +6,7 @@ from ipymediator.interface.mediator import Mediator
 from ipymediator.interface.metaclass import ABCTraits
 
 from ipywidgets import widgets
-from traitlets import Bool
+from traitlets import Bool, HasTraits
 
 
 class Component(ABCTraits):
@@ -17,11 +17,18 @@ class Component(ABCTraits):
         """Add a bool value trait to any Button widgets and assigns an on_click
         function to toggle the Button value."""
         if isinstance(kwargs["widget"], widgets.Button):
-
             def on_click(w) -> None:
                 w.value = not w.value
+            # ipywidgets overwrites HasTraits.add_traits and uses depreciated
+            # trait.get_metadata. The metadata of a trait type instance should
+            # be directly accessed via the metadata attribute.
+            # Issue: https://github.com/jupyter-widgets/ipywidgets/pull/3894
 
-            kwargs["widget"].add_traits(value=Bool(False))  # type: ignore
+            # pytest depreciation warning:
+            # kwargs["widget"].add_traits(value=Bool(False))
+
+            # NOTE: HasTraits.add_traits avoids depreciation warning.
+            HasTraits.add_traits(kwargs["widget"], value=Bool(False))
             kwargs["widget"].on_click(on_click)
         return super(Component, cls).__new__(cls)
 
@@ -55,6 +62,7 @@ class Component(ABCTraits):
 
             AttributeError: Access trait name not held by widget property
         """
+        super(Component, self).__init__()
         self.__mediator = mediator
         self.widget = widget
         try:
@@ -85,9 +93,9 @@ class Component(ABCTraits):
         the call to the Component's DOMWidget properties"""
         return itemgetter(trait, *args)(self)
 
-    def __contains__(self, item):
+    def __contains__(self, trait) -> bool:
         """"""
-        return item in self.widget
+        return self.widget.has_trait(trait)
 
     def __getitem__(self, trait: str):
         """Subscriptable interface of Component passed to DOMWidget"""

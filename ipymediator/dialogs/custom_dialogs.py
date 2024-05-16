@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Optional, Union
 
 from ipymediator.enumerations import ButtonColour, Options, Value
-from ipymediator.interface import Component, Mediator
+from ipymediator.interface import Component, MediatorWithTraits
 from ipymediator.utils.common_functions import (
     deiconify_str,
     directory_contents,
@@ -10,15 +10,7 @@ from ipymediator.utils.common_functions import (
     singlenotifydispatch
 )
 from ipywidgets import widgets as w
-from traitlets import Bool, HasTraits, Instance
-
-
-class MediatorWithTraits(Mediator, HasTraits):
-    """Abstract Mediator class for Mediator interface implimentation. Extends
-    the Mediator interface by allowing traits from the traitlets library,
-    through HasTraits inheritence.
-    """
-    pass
+from traitlets import Bool, Instance
 
 
 class FileDialog(MediatorWithTraits):
