@@ -4,9 +4,9 @@ from enum import Enum
 class ButtonColour(str, Enum):
     """StrEnum for button widget colours"""
 
-    BLUE: str = "#cce6f4"
-    GREEN: str = "#ebebeb"
-    RED: str = "#f8edeb"
+    BLUE: "ButtonColour.BLUE.value" = "#cce6f4"
+    GREEN: "ButtonColour.GREEN.value" = "#ebebeb"
+    RED: "ButtonColour.RED.value" = "#f8edeb"
 
     def __str__(self) -> str:
         """Enables StrEnum prior to 3.11"""
