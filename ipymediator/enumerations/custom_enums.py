@@ -16,8 +16,8 @@ class ButtonColour(str, Enum):
 class IconUnicode(str, Enum):
     """StrEnum for unicode icons 📁 & 📄"""
 
-    DIR: str = "\U0001F4C1"
-    FILE: str = "\U0001F4C4"
+    DIR = "\U0001F4C1"
+    FILE = "\U0001F4C4"
 
     def __str__(self) -> str:
         """Enables StrEnum prior to 3.11"""
