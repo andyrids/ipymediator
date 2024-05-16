@@ -19,7 +19,6 @@ class Component(ABCTraits):
         if isinstance(kwargs["widget"], widgets.Button):
             def on_click(w) -> None:
                 w.value = not w.value
-
             # ipywidgets overwrites HasTraits.add_traits and uses depreciated
             # trait.get_metadata. The metadata of a trait type instance should
             # be directly accessed via the metadata attribute.
